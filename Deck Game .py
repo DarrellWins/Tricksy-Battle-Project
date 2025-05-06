@@ -50,4 +50,3 @@ if __name__ == "__main__":
     print(f"Remaining cards in deck: {len(deck)}")
 
     reveal_top_card(deck)
-#

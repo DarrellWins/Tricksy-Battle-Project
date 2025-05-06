@@ -40,26 +40,15 @@ def reveal_top_card(deck):
         return None
 
 # Main block for testing
-if __name__ == "__main__":
-    deck = build_deck()
-    shuffle_deck(deck)
-
-    print(f"Deck size: {len(deck)}")
-    player1_hand = deal_cards(deck, 8)
-    player2_hand = deal_cards(deck, 8)
-
-    print("Player 1 hand:", player1_hand)
-    print("Player 2 hand:", player2_hand)
-    print(f"Remaining cards in deck: {len(deck)}")
-
-    reveal_top_card(deck)
 # Gameplay
+# Print hand
 def print_hand(player_num, hand):
     print("Player " + str(player_num) + " hand:")
     for i in range(len(hand)):
         card = hand[i]
         print(str(i + 1) + ": " + card["rank"] + " of " + card["suit"])
-#Playing one round
+
+# Play one round
 def play_round(leader, p1_hand, p2_hand):
     print_hand(1, p1_hand)
     print_hand(2, p2_hand)
@@ -69,16 +58,16 @@ def play_round(leader, p1_hand, p2_hand):
         lead_index = int(input("Player 1 - choose a card number to play: ")) - 1
         lead_card = p1_hand.pop(lead_index)
 
-        print("Player 2 - follow suit if you can.")
-        follow_index = int(input("Choose a card number to play: ")) - 1
+        print("Player 2 - choose a card to follow.")
+        follow_index = int(input("Player 2 - choose a card number to play: ")) - 1
         follow_card = p2_hand.pop(follow_index)
     else:
         print("Player 2 goes first.")
         lead_index = int(input("Player 2 - choose a card number to play: ")) - 1
         lead_card = p2_hand.pop(lead_index)
 
-        print("Player 1 - follow suit if you can.")
-        follow_index = int(input("Choose a card number to play: ")) - 1
+        print("Player 1 - choose a card to follow.")
+        follow_index = int(input("Player 1 - choose a card number to play: ")) - 1
         follow_card = p1_hand.pop(follow_index)
 
     print("Lead card: " + lead_card["rank"] + " of " + lead_card["suit"])
@@ -95,3 +84,59 @@ def play_round(leader, p1_hand, p2_hand):
 
     print("Player " + str(winner) + " wins the round.")
     return winner
+
+# Main loop version of Tricksy Battle
+def play_game():
+    deck = build_deck()
+    shuffle_deck(deck)
+
+    player1_hand = deal_cards(deck, 8)
+    player2_hand = deal_cards(deck, 8)
+    player1_score = 0
+    player2_score = 0
+    leader = random.choice([1, 2])
+    round_num = 1
+
+    while round_num <= 16:
+        print("\n=== Round " + str(round_num) + " ===")
+        print("Score -> Player 1: " + str(player1_score) + " | Player 2: " + str(player2_score))
+
+        winner = play_round(leader, player1_hand, player2_hand)
+
+        if winner == 1:
+            player1_score += 1
+            leader = 1
+        else:
+            player2_score += 1
+            leader = 2
+
+        reveal_top_card(deck)
+        round_num += 1
+
+        # Deal 4 more cards if needed
+        if len(player1_hand) == 4 and len(player2_hand) == 4 and len(deck) >= 8:
+            player1_hand += deal_cards(deck, 4)
+            player2_hand += deal_cards(deck, 4)
+
+        # Early end if one player hits 9 and other has at least 1
+        if (player1_score >= 9 and player2_score >= 1) or (player2_score >= 9 and player1_score >= 1):
+            print("Game ends early — no way for the other player to win.")
+            break
+
+    print("\n=== Final Score ===")
+    print("Player 1: " + str(player1_score))
+    print("Player 2: " + str(player2_score))
+
+    if player1_score == 0:
+        print("Player 2 shot the moon and wins with 17 points!")
+    elif player2_score == 0:
+        print("Player 1 shot the moon and wins with 17 points!")
+    elif player1_score > player2_score:
+        print("Player 1 wins!")
+    elif player2_score > player1_score:
+        print("Player 2 wins!")
+    else:
+        print("It's a tie!")
+
+# Run game
+play_game()

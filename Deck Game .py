@@ -50,3 +50,9 @@ if __name__ == "__main__":
     print(f"Remaining cards in deck: {len(deck)}")
 
     reveal_top_card(deck)
+# Gameplay
+def print_hand(player_num, hand):
+    print("Player " + str(player_num) + " hand:")
+    for i in range(len(hand)):
+        card = hand[i]
+        print(str(i + 1) + ": " + card["rank"] + " of " + card["suit"])

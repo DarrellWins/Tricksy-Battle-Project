@@ -15,6 +15,11 @@ Each round consists of : Player 1 and 2 selecting cards from their hand. Determi
 - reveals cards after each round for each player
 basic win conditions are in place.
 
+# Round one 
+A random player is chosen to lead the round. Both players choose a card to play from their hand. The second player must follow the same suit if possible. The highest card in the lead suit wins the round. If both cards are the same value, the leader automatically wins (no ties allowed).
+
+
+
 ## To run from terminal 
 '''bash
 python tricky_battle.py

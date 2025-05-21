@@ -1,7 +1,6 @@
 # standard deck of playing cards, with the Kings removed (48 Cards)
-import os
 import random
-
+import time  # Added for timing features
 #Player1_score = 0
 #Player2_score = 0 
 
@@ -72,6 +71,8 @@ def play_round(leader, p1_hand, p2_hand):
 
     print("Lead card: " + lead_card["rank"] + " of " + lead_card["suit"])
     print("Follow card: " + follow_card["rank"] + " of " + follow_card["suit"])
+
+    time.sleep(1)  # Pause for suspense
 
     # Decide winner
     if follow_card["suit"] == lead_card["suit"]:

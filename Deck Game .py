@@ -100,6 +100,9 @@ def play_round(leader, p1_hand, p2_hand):
     return winner
 
 # Main loop version of Tricksy Battle
+
+round_winners = []
+
 def play_game():
     deck = build_deck()
     shuffle_deck(deck)
@@ -120,6 +123,7 @@ def play_game():
 
 
         winner = play_round(leader, player1_hand, player2_hand)
+        round_winners.append(winner)
 
         if winner == 1:
             player1_score += 1
@@ -155,6 +159,10 @@ def play_game():
         print("Player 2 wins!")
     else:
         print("It's a tie!")
+
+        print("Round winners summary:")
+    for i, w in enumerate(round_winners, 1):
+        print(f"Round {i}: Player {w}")
 
 # Run game
 play_game()

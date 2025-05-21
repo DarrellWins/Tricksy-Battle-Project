@@ -27,4 +27,4 @@ python tricky_battle.py
 # Advanced Topics Used
 - Time added
 - Doc strings already included
-- 
+- input validation 

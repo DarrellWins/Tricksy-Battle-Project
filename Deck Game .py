@@ -50,25 +50,36 @@ def print_hand(player_num, hand):
         print(str(i + 1) + ": " + card["rank"] + " of " + card["suit"])
 
 # Play one round
+def get_valid_card_index(player_name, hand):
+    while True:
+        try:
+            index = int(input(f"{player_name} - choose a card number to play: ")) - 1
+            if 0 <= index < len(hand):
+                return index
+            else:
+                print("Invalid choice. Please choose a number within range.")
+        except ValueError:
+            print("Please enter a valid number.")
+
 def play_round(leader, p1_hand, p2_hand):
     print_hand(1, p1_hand)
     print_hand(2, p2_hand)
 
     if leader == 1:
         print("Player 1 goes first.")
-        lead_index = int(input("Player 1 - choose a card number to play: ")) - 1
+        lead_index = get_valid_card_index("Player 1", p1_hand)
         lead_card = p1_hand.pop(lead_index)
 
         print("Player 2 - choose a card to follow.")
-        follow_index = int(input("Player 2 - choose a card number to play: ")) - 1
+        follow_index = get_valid_card_index("Player 2", p2_hand)
         follow_card = p2_hand.pop(follow_index)
     else:
         print("Player 2 goes first.")
-        lead_index = int(input("Player 2 - choose a card number to play: ")) - 1
+        lead_index = get_valid_card_index("Player 2", p2_hand)
         lead_card = p2_hand.pop(lead_index)
 
         print("Player 1 - choose a card to follow.")
-        follow_index = int(input("Player 1 - choose a card number to play: ")) - 1
+        follow_index = get_valid_card_index("Player 1", p1_hand)
         follow_card = p1_hand.pop(follow_index)
 
     print("Lead card: " + lead_card["rank"] + " of " + lead_card["suit"])

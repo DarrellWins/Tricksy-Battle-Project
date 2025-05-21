@@ -1,15 +1,22 @@
-# standard deck of playing cards, with the Kings removed (48 Cards)
+# Tricksy Battle - Beginner Python Project
 import random
-import time  # Added for timing features
-#Player1_score = 0
-#Player2_score = 0 
+import time
+import time as t
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from typing import List, Dict
 
-#build cards 
-# Define card suits and ranks (excluding Kings)
-suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
-ranks = [("Ace", 1), ("2", 2), ("3", 3), ("4", 4), ("5", 5),
-         ("6", 6), ("7", 7), ("8", 8), ("9", 9), ("10", 10),
-         ("Jack", 11), ("Queen", 12)]
+# Define suits and ranks (Kings are removed)
+suits: List[str] = ["Hearts", "Diamonds", "Clubs", "Spades"]
+ranks: List[tuple[str, int]] = [("Ace", 1), ("2", 2), ("3", 3), ("4", 4), ("5", 5),
+                                 ("6", 6), ("7", 7), ("8", 8), ("9", 9), ("10", 10),
+                                 ("Jack", 11), ("Queen", 12)]
+
+# Track round durations for timing analysis
+timing_data: List[float] = []
+round_winners: List[int] = []
+
 # Build the deck
 def build_deck():
     deck = []
@@ -49,32 +56,47 @@ def print_hand(player_num, hand):
 
 # Play one round
 def play_round(leader, p1_hand, p2_hand):
+    """
+    Executes a round of the game, with players selecting cards.
+    Args:
+        leader (int): Indicates which player goes first.
+        p1_hand (list): Player 1's hand.
+        p2_hand (list): Player 2's hand.
+    Returns:
+        int: The winner of the round (1 or 2).
+    """
     print_hand(1, p1_hand)
+    time.sleep(0.5)
     print_hand(2, p2_hand)
+    time.sleep(0.5)
 
     if leader == 1:
         print("Player 1 goes first.")
+        time.sleep(0.5)
         lead_index = int(input("Player 1 - choose a card number to play: ")) - 1
         lead_card = p1_hand.pop(lead_index)
 
         print("Player 2 - choose a card to follow.")
+        time.sleep(0.5)
         follow_index = int(input("Player 2 - choose a card number to play: ")) - 1
         follow_card = p2_hand.pop(follow_index)
     else:
         print("Player 2 goes first.")
+        time.sleep(0.5)
         lead_index = int(input("Player 2 - choose a card number to play: ")) - 1
         lead_card = p2_hand.pop(lead_index)
 
         print("Player 1 - choose a card to follow.")
+        time.sleep(0.5)
         follow_index = int(input("Player 1 - choose a card number to play: ")) - 1
         follow_card = p1_hand.pop(follow_index)
 
     print("Lead card: " + lead_card["rank"] + " of " + lead_card["suit"])
+    time.sleep(1)
     print("Follow card: " + follow_card["rank"] + " of " + follow_card["suit"])
+    time.sleep(1)
 
-    time.sleep(1)  # Pause for suspense
-
-    # Decide winner
+    # Determine winner (no ties)
     if follow_card["suit"] == lead_card["suit"]:
         if follow_card["value"] > lead_card["value"]:
             winner = 2 if leader == 1 else 1
@@ -84,6 +106,7 @@ def play_round(leader, p1_hand, p2_hand):
         winner = leader
 
     print("Player " + str(winner) + " wins the round.")
+    time.sleep(1)
     return winner
 
 # Main loop version of Tricksy Battle

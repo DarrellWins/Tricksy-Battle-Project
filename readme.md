@@ -23,3 +23,8 @@ A random player is chosen to lead the round. Both players choose a card to play 
 ## To run from terminal 
 '''bash
 python tricky_battle.py
+
+# Advanced Topics Used
+- Time added
+- Doc strings already included
+- 
